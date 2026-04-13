@@ -5,57 +5,60 @@
 Memorial dedicado à história de cada uma das vítimas do coronavírus no Brasil.
 
 **Site:** https://inumeraveis.com.br
+**Lançamento:** 30 de abril de 2020
+**Coleta de histórias encerrada em:** 10 de janeiro de 2026
 
 ## Sobre
 
-Inumeráveis é uma obra do artista **Edson Pavoni** em colaboração com Rogério Oliveira, Rogério Zé, Alana Rizzo, Guilherme Bullejos, Gabriela Veiga, Giovana Madalosso, Rayane Urani, Jonathan Querubina e os jornalistas e voluntários que continuamente adicionam histórias a este memorial.
+Inumeráveis é uma obra do artista **Edson Pavoni** em colaboração com Rogério Oliveira, Rogério Zé, Alana Rizzo, Guilherme Bullejos, Gabriela Veiga, Giovana Madalosso, Rayane Urani, Jonathan Querubina e os jornalistas e voluntários que adicionaram histórias a este memorial ao longo de quase seis anos.
 
-Cada entrada no memorial é uma pessoa — um nome, uma idade, uma história — que existiu antes de virar estatística. O projeto nasceu em 2020 em resposta à forma como vítimas da pandemia eram reportadas no Brasil: pelo número, não pela vida.
+Cada entrada no memorial é uma pessoa — um nome, uma idade, uma história — que existiu antes de virar estatística. O projeto nasceu em **30 de abril de 2020** em resposta à forma como as vítimas da pandemia eram reportadas no Brasil: pelo número, não pela vida. A ideia surgiu de uma conversa entre Edson Pavoni e Rogério Oliveira, junto da jornalista Alana Rizzo, e foi ao ar após três semanas de trabalho de um grupo inicial de oito voluntários.
 
-## Estrutura do repositório
+A coleta colaborativa de histórias foi encerrada em **10 de janeiro de 2026**, após quase seis anos de operação contínua e milhares de testemunhos reunidos. O memorial segue no ar como arquivo permanente.
 
-```
-public/                    # Site estático servido pelo Firebase Hosting
-  index.html               # Homepage — carrega names.json e renderiza a lista
-  names.json               # Dados das ~9.200 histórias (gerado a partir do índice)
-  <slug-do-nome>/          # Uma pasta por pessoa, com seu index.html
-  wp-content/              # Assets herdados da migração WordPress (CSS/JS/fontes)
-firebase.json              # Config do Firebase Hosting (cache headers, cleanUrls)
-.firebaserc                # Projeto Firebase ativo (inumeraveis-ab320)
-.github/workflows/         # Deploy automático via GitHub Actions
-```
+O Memorial reúne histórias de vida de pessoas indígenas, quilombolas, ribeirinhas, ricas, pobres, pretas, brancas, de todas as regiões do país. A diversidade e velocidade de adesão ao Memorial reforça a certeza de que um espaço de celebração destas vidas é uma demanda da sociedade.
 
-## Como o site é construído
+## Memorial Físico — /futuro
 
-O site é 100% estático. Cada memorial é um HTML pré-renderizado. A **homepage** carrega as ~9.200 histórias a partir de `names.json` e as renderiza no cliente — isso reduziu a página inicial de 2,5 MB para ~10 KB de HTML + um JSON cacheável por um ano.
+O Memorial Inumeráveis, hoje vivo em sua versão digital, vem sendo projetado para se tornar também uma **experiência física**, aberta a toda a população — uma jornada de memória e cura a céu aberto na cidade de São Paulo.
 
-## Deploy
+A proposta conta com apoio da **Secretaria da Cultura e Economia Criativa do Estado de São Paulo**.
 
-O deploy acontece **automaticamente** via GitHub Actions a cada push em `main`:
+### Uma jornada de cura
 
-1. O workflow em `.github/workflows/firebase-hosting-merge.yml` é acionado
-2. Ele autentica no Firebase via um service account guardado como secret do repositório (`FIREBASE_SERVICE_ACCOUNT`)
-3. Publica o conteúdo de `public/` no projeto `inumeraveis-ab320`
+Escondida entre árvores, uma arquitetura curvilínea se revela. Na entrada, um muro corta o memorial ao meio. Sobre ele, um texto conta a história do novo vírus e da resposta humana a ele — a velocidade da ameaça invisível, a importância da ciência e a falta de crença nela, o isolamento social, o avanço da tecnologia que nos aproximou à distância, a nossa relação desequilibrada com os animais, e os líderes que trocaram milhares de vidas pela vontade de avançar a qualquer custo.
 
-### Deploy manual (quando necessário)
+Os **nomes de todas as vítimas no Brasil** serão gravados em metal, preenchendo o guarda-corpo de duas rampas. Entre as rampas, um amplo espaço vazio e silencioso separa os visitantes — lembrando do isolamento social e da solidão do luto.
 
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
-firebase deploy --only hosting --project inumeraveis-ab320
-```
+### Ritual diário de luz
 
-## Otimizações aplicadas
+Todos os dias, junto com o pôr do sol, o memorial acende luzes que iluminam individualmente cada nome gravado. Quando um visitante aponta o celular para um nome, é direcionado para a história daquela pessoa no site do Memorial. Nesse momento, a luz daquele nome **acende com mais intensidade** — como se estivesse sentindo a conexão.
 
-Para caber na cota gratuita do Firebase Hosting (10 GB de transferência/mês):
+Durante essa uma hora diária, mesmo alguém acessando o site do outro lado do mundo é capaz de fazer uma luz brilhar fisicamente no memorial. Assim, por meio da intensidade das luzes, quem está presente sente as conexões vindas do mundo todo.
 
-- **Homepage dinâmica**: 9.200 entradas extraídas para `names.json`, carregadas via `fetch` no cliente. HTML inicial: 34 KB (era 2,5 MB).
-- **Cache agressivo**: assets estáticos (`css`, `js`, imagens, fontes) servidos com `Cache-Control: max-age=31536000, immutable`. Páginas HTML com `max-age=86400, stale-while-revalidate=604800`.
-- **robots.txt**: bloqueia crawlers de IA e SEO de alto volume (GPTBot, ClaudeBot, CCBot, PerplexityBot, Bytespider, SemrushBot, AhrefsBot etc.). Demais bots recebem `Crawl-delay: 10`.
-- **URLs relativas**: referências internas na homepage passam por caminhos relativos para reduzir bytes e viabilizar testes locais.
+### A saudade do toque
 
-## Como adicionar uma história
+No fim da rampa, uma instalação artística composta por dois vidros parece dividir o espaço — mas cria uma ponte sensorial entre as duas rampas. Quando alguém toca o vidro de um lado e outra pessoa toca do outro, no mesmo lugar e ao mesmo tempo, **ambas sentem fisicamente que se tocaram** por meio de uma gentil vibração.
 
-Histórias são adicionadas através do formulário em [inumeraveis.com.br/adicionar](https://inumeraveis.com.br/adicionar). Após revisão editorial, a nova página é gerada e publicada.
+> "Nada que pareceria distante pode suportar a decisão de um encontro. Simbólico ou real, a vida de amor perdida segue, dentro de nós."
+> — *Ana Claudia Quintana Arantes, médica, paliativista e integrante do time Inumeráveis*
+
+### Recomeço
+
+A descida da escada, degrau a degrau, simboliza a retomada das relações presenciais. A escada se torna arquibancada, abrigo para conversas. No centro, uma árvore: ao redor dela nos lembramos da relação desequilibrada com a natureza que originou o vírus — e, ao mesmo tempo, nos unimos para projetar um futuro mais harmonioso.
+
+> "A vida insiste em se mostrar sob o sol, sob o tempo, revelando o que mais precisamos aprender no tempo de luto: aprender a recriar o que éramos sob os olhos do amor de quem perdemos. O amor não morre."
+> — *Ana Claudia Quintana Arantes*
+
+### Por que construir
+
+A construção do Memorial Físico em homenagem às vítimas da pandemia no Brasil se faz justa por três razões:
+
+1. **Reconhecimento material da verdade** — mesmo durante a pandemia, muitos brasileiros duvidaram da sua dimensão. Um memorial físico ancora a memória coletiva contra o negacionismo.
+2. **Amparo às milhares de famílias enlutadas** — um lugar solene para quem perdeu e para quem ainda precisa atravessar o luto.
+3. **Serviço histórico às futuras gerações** — para que não se cometam os mesmos erros.
+
+Conheça a proposta completa em **[inumeraveis.com.br/futuro](https://inumeraveis.com.br/futuro)**.
 
 ## Jornalistas e voluntários
 
