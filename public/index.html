@@ -980,8 +980,26 @@ não há quem goste de ser número <br />gente merece existir em prosa
 (function(){
   var target = document.getElementById('list');
   if (!target) return;
-  fetch('/names.json', { cache: 'force-cache' })
-    .then(function(r){ return r.json(); })
+
+  var SOURCES = [
+    'https://cdn.jsdelivr.net/gh/edsonpavoni/inumeraveis@main/public/names.json',
+    '/names.json'
+  ];
+
+  function tryFetch(i){
+    if (i >= SOURCES.length) return Promise.reject(new Error('all sources failed'));
+    return fetch(SOURCES[i], { cache: 'force-cache' })
+      .then(function(r){
+        if (!r.ok) throw new Error('status ' + r.status);
+        return r.json();
+      })
+      .catch(function(err){
+        console.warn('names.json source ' + i + ' failed:', err.message);
+        return tryFetch(i + 1);
+      });
+  }
+
+  tryFetch(0)
     .then(function(data){
       var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
       var parts = [];
