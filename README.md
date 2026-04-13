@@ -5,8 +5,6 @@
 Memorial dedicado à história de cada uma das vítimas do coronavírus no Brasil.
 
 **Site:** https://inumeraveis.com.br
-**Lançamento:** 30 de abril de 2020
-**Coleta de histórias encerrada em:** 10 de janeiro de 2026
 
 ## Sobre
 
